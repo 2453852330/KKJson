@@ -131,3 +131,125 @@ FKKJsonValueArray UKKJsonBlueprintFunctionLibrary::KK_AsArray(FKKJsonValue& KKJs
 	check(KKJsonValue.JsonValue!=nullptr);
 	return FKKJsonValueArray(KKJsonValue.JsonValue->AsArray());
 }
+
+// ***************************** create *******************
+FKKJsonObject UKKJsonBlueprintFunctionLibrary::Kk_CreateJsonObject()
+{
+	return FKKJsonObject(MakeShareable(new FJsonObject));
+}
+
+FKKJsonValueArray UKKJsonBlueprintFunctionLibrary::KK_CreateJsonArray()
+{
+	return FKKJsonValueArray();
+}
+
+// ****************** add obj data ************************
+FKKJsonObject& UKKJsonBlueprintFunctionLibrary::KK_SetValue_Int(FKKJsonObject& kkJsonObject, FString KeyName,
+	int32 Value)
+{
+	check(kkJsonObject.JsonObject!=nullptr);
+	kkJsonObject.JsonObject->SetNumberField(KeyName,Value);
+	return kkJsonObject;
+}
+
+FKKJsonObject& UKKJsonBlueprintFunctionLibrary::KK_SetValue_Float(FKKJsonObject& kkJsonObject, FString KeyName,
+	float Value)
+{
+	check(kkJsonObject.JsonObject!=nullptr);
+	kkJsonObject.JsonObject->SetNumberField(KeyName,Value);
+	return kkJsonObject;
+}
+
+FKKJsonObject& UKKJsonBlueprintFunctionLibrary::KK_SetValue_Bool(FKKJsonObject& kkJsonObject, FString KeyName,
+	bool Value)
+{
+	check(kkJsonObject.JsonObject!=nullptr);
+	kkJsonObject.JsonObject->SetBoolField(KeyName,Value);
+	return kkJsonObject;
+}
+
+FKKJsonObject& UKKJsonBlueprintFunctionLibrary::KK_SetValue_String(FKKJsonObject& kkJsonObject, FString KeyName,
+	FString Value)
+{
+	check(kkJsonObject.JsonObject!=nullptr);
+	kkJsonObject.JsonObject->SetStringField(KeyName,Value);
+	return kkJsonObject;
+}
+
+FKKJsonObject& UKKJsonBlueprintFunctionLibrary::Kk_SetValue_Object(FKKJsonObject& kkJsonObject, FString KeyName,
+	FKKJsonObject& Value)
+{
+	check(kkJsonObject.JsonObject!=nullptr);
+	kkJsonObject.JsonObject->SetObjectField(KeyName,Value.JsonObject);
+	return kkJsonObject;
+}
+
+FKKJsonObject& UKKJsonBlueprintFunctionLibrary::KK_SetValue_Array(FKKJsonObject& kkJsonObject, FString KeyName,
+	FKKJsonValueArray& Value)
+{
+	check(kkJsonObject.JsonObject!=nullptr);
+	kkJsonObject.JsonObject->SetArrayField(KeyName,Value.JsonValueArray);
+	return kkJsonObject;
+}
+
+// ******************** add array data ********************
+FKKJsonValueArray& UKKJsonBlueprintFunctionLibrary::KK_SetArrayValue_Int(FKKJsonValueArray& KKJsonArrayValue,
+                                                                         int32 Value)
+{
+	KKJsonArrayValue.JsonValueArray.Add(MakeShareable(new FJsonValueNumber(Value)));
+	return KKJsonArrayValue;
+}
+
+FKKJsonValueArray& UKKJsonBlueprintFunctionLibrary::KK_SetArrayValue_Float(FKKJsonValueArray& KKJsonArrayValue,
+	float Value)
+{
+	KKJsonArrayValue.JsonValueArray.Add(MakeShareable(new FJsonValueNumber(Value)));
+	return KKJsonArrayValue;
+}
+
+FKKJsonValueArray& UKKJsonBlueprintFunctionLibrary::KK_SetArrayValue_Bool(FKKJsonValueArray& KKJsonArrayValue,
+	bool Value)
+{
+	KKJsonArrayValue.JsonValueArray.Add(MakeShareable(new FJsonValueBoolean(Value)));
+	return KKJsonArrayValue;
+}
+
+FKKJsonValueArray& UKKJsonBlueprintFunctionLibrary::KK_SetArrayValue_FString(FKKJsonValueArray& KKJsonArrayValue,
+	FString Value)
+{
+	KKJsonArrayValue.JsonValueArray.Add(MakeShareable(new FJsonValueString(Value)));
+	return KKJsonArrayValue;
+}
+
+FKKJsonValueArray& UKKJsonBlueprintFunctionLibrary::KK_SetArrayValue_Object(FKKJsonValueArray& KKJsonArrayValue,
+	FKKJsonObject& Value)
+{
+	KKJsonArrayValue.JsonValueArray.Add(MakeShareable(new FJsonValueObject(Value.JsonObject)));
+	return KKJsonArrayValue;
+}
+
+FKKJsonValueArray& UKKJsonBlueprintFunctionLibrary::KK_SetArrayValue_Array(FKKJsonValueArray& KKJsonArrayValue,
+	FKKJsonValueArray& Value)
+{
+	KKJsonArrayValue.JsonValueArray.Add(MakeShareable(new FJsonValueArray(Value.JsonValueArray)));
+	return KKJsonArrayValue;
+}
+
+
+// ************************ get String ***********************
+FString UKKJsonBlueprintFunctionLibrary::KK_GetJsonString_Object(FKKJsonObject& KKJsonObject)
+{
+	check(KKJsonObject.JsonObject!=nullptr);
+	FString tmp;
+	TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&tmp);
+	FJsonSerializer::Serialize(KKJsonObject.JsonObject.ToSharedRef(),JsonWriter);
+	return tmp;
+}
+
+FString UKKJsonBlueprintFunctionLibrary::KK_GetJsonString_Array(FKKJsonValueArray& KKJsonValueArray)
+{
+	FString tmp;
+	TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&tmp);
+	FJsonSerializer::Serialize(KKJsonValueArray.JsonValueArray,JsonWriter);
+	return tmp;
+}

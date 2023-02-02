@@ -66,5 +66,77 @@ class KKJSON_API UKKJsonBlueprintFunctionLibrary : public UBlueprintFunctionLibr
 	static FKKJsonObject KK_AsObject(UPARAM(ref) FKKJsonValue & KKJsonValue);
 	UFUNCTION(BlueprintCallable,BlueprintPure,Category="KKJson|Convert")
 	static FKKJsonValueArray KK_AsArray(UPARAM(ref) FKKJsonValue & KKJsonValue);
+
 	
+	// ************************** Create ************************************
+
+	// create root json obj to add data
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="KKJson|Make")
+	static FKKJsonObject Kk_CreateJsonObject();
+
+	// create root array to add data
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="KKJson|Make")
+	static FKKJsonValueArray KK_CreateJsonArray();
+
+	// ************************** Add OBJ Data ********************************
+
+	// add int value with obj
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonObject & KK_SetValue_Int(UPARAM(ref) FKKJsonObject & kkJsonObject, FString KeyName , int32 Value);
+	
+	// add float value with obj
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonObject & KK_SetValue_Float(UPARAM(ref) FKKJsonObject & kkJsonObject, FString KeyName , float Value);
+
+	// add bool value with obj
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonObject & KK_SetValue_Bool(UPARAM(ref) FKKJsonObject & kkJsonObject, FString KeyName , bool Value);
+
+	// add string value with obj
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonObject & KK_SetValue_String(UPARAM(ref) FKKJsonObject & kkJsonObject, FString KeyName , FString Value);
+
+	// add object value with obj
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonObject & Kk_SetValue_Object(UPARAM(ref) FKKJsonObject & kkJsonObject, FString KeyName , UPARAM(ref) FKKJsonObject & Value);
+
+	// add array value with obj
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonObject & KK_SetValue_Array(UPARAM(ref) FKKJsonObject & kkJsonObject, FString KeyName , UPARAM(ref) FKKJsonValueArray & Value);
+
+	
+	// ************************** Add Array Data ********************************
+	// add int value with array
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonValueArray & KK_SetArrayValue_Int(UPARAM(ref) FKKJsonValueArray & KKJsonArrayValue,int32 Value);
+
+	// add float value with array
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonValueArray & KK_SetArrayValue_Float(UPARAM(ref) FKKJsonValueArray & KKJsonArrayValue,float Value);
+
+	// add bool value with array
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonValueArray & KK_SetArrayValue_Bool(UPARAM(ref) FKKJsonValueArray & KKJsonArrayValue,bool Value);
+
+	// add FString value with array
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonValueArray & KK_SetArrayValue_FString(UPARAM(ref) FKKJsonValueArray & KKJsonArrayValue,FString Value);
+
+	// add object value with array
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonValueArray & KK_SetArrayValue_Object(UPARAM(ref) FKKJsonValueArray & KKJsonArrayValue,UPARAM(ref) FKKJsonObject & Value);
+
+	// add array value with array
+	UFUNCTION(BlueprintCallable,Category="KKJson|Set")
+	static FKKJsonValueArray & KK_SetArrayValue_Array(UPARAM(ref) FKKJsonValueArray & KKJsonArrayValue,UPARAM(ref) FKKJsonValueArray & Value);
+	
+	// ************************* convert obj/array to string *************************
+
+	// get json string from objecy
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="KKJson|To")
+	static FString KK_GetJsonString_Object(UPARAM(ref) FKKJsonObject & KKJsonObject);
+
+	// get json string from array
+	UFUNCTION(BlueprintCallable,BlueprintPure,Category="KKJson|To")
+	static FString KK_GetJsonString_Array(UPARAM(ref) FKKJsonValueArray & KKJsonValueArray);
 };
